@@ -1,7 +1,15 @@
+import Head from "next/head";
+import SelectMovie from "../components/SelectMovie";
+
 const Home = () => {
   return (
     <div>
-      <p className="text-2xl text-red-900">Hello, Welcome to Next JS</p>
+      <Head>
+        <title>Star Wars</title>
+      </Head>
+      <div>
+        <SelectMovie />
+      </div>
     </div>
   );
 };
