@@ -1,37 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import TableSorter from "./TableSorter";
 
 const SelectedMovieProfile = (props) => {
+  const [charactersProfileArray, setCharactersProfileArray] = useState([]);
+  const [movieId, setMovieId] = useState(null);
   console.log(props.input);
-  let arr = [];
-  let reply;
 
-  let [selectedMovieCharacters, opening_crawl] = props.input;
+  let [selectedMovieCharacters, opening_crawl, id] = props.input;
 
-  selectedMovieCharacters.map((character) => {
-    try {
-      let apiUrl = character;
-      fetch(apiUrl)
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result.height);
-          arr.push(result.height);
-        });
-    } catch (err) {
-      console.log(err);
-      alert("Error!, Try Again");
-    }
-  });
+  if (movieId !== id) {
+    setMovieId(id);
+    setCharactersProfileArray([]);
+    selectedMovieCharacters.map((character) => {
+      try {
+        let apiUrl = character;
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((result) => {
+            let resultNeeded = {
+              name: result.name,
+              gender: result.gender,
+              height: result.height,
+            };
+            console.log(resultNeeded);
+            setCharactersProfileArray((prevState) => [
+              ...prevState,
+              resultNeeded,
+            ]);
+          });
+      } catch (err) {
+        console.log(err);
+        alert("Error!, Try Again");
+      }
+    });
+  } else {
+  }
 
   return (
     <div>
       <div className="text-lg text-black flex jusitfy-center">
         {opening_crawl}
       </div>
-      <div className="bg-yellow-200 mt-2">
-        {arr.map((item) => (
-          <h1>{item}</h1>
-        ))}
-      </div>
+      <TableSorter input={charactersProfileArray} />
     </div>
   );
 };

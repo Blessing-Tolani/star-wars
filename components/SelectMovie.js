@@ -26,14 +26,18 @@ const SelectMovie = () => {
     fetchMovies();
   }, []);
 
+  const set = (id, movieDetailsArray) => {
+    setSelectedMovieId(id);
+    setSelectedMovie(movieDetailsArray);
+  };
+
   const toggleDropdown = () => setOpen(!isOpen);
   const handleItemClick = (id, movieDetailsArray) => {
-    selectedMovieId == id ? setSelectedMovieId(null) : setSelectedMovieId(id);
-
-    selectedMovieId == id
-      ? setSelectedMovie(null)
-      : setSelectedMovie(movieDetailsArray);
     toggleDropdown();
+    if (selectedMovieId != id) {
+      set(id, movieDetailsArray);
+    } else if (selectedMovieId == id) {
+    }
   };
 
   return (
@@ -52,19 +56,20 @@ const SelectMovie = () => {
           <div
             className={`dropdown-body  ${isOpen ? "block" : "hidden"} ...rest`}
           >
-            {movielist.map((item) => (
+            {movielist.map((movie) => (
               <div
                 className="dropdown-item border-t rounded-xl bg-white p-2 hover:cursor-pointer  "
                 onClick={(e) =>
                   handleItemClick(e.target.id, [
-                    item.characters,
-                    item.opening_crawl,
+                    movie.characters,
+                    movie.opening_crawl,
+                    movie.episode_id,
                   ])
                 }
-                id={item.episode_id}
-                key={item.episode_id}
+                id={movie.episode_id}
+                key={movie.episode_id}
               >
-                {item.title}
+                {movie.title}
               </div>
             ))}
           </div>

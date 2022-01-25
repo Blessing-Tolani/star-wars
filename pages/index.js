@@ -7,9 +7,9 @@ const Home = () => {
       <Head>
         <title>Star Wars</title>
       </Head>
-      <div>
+      <section>
         <SelectMovie />
-      </div>
+      </section>
     </div>
   );
 };
