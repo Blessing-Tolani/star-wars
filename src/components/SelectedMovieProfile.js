@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TableSorter from "./TableSorter";
+import CharactersList from "./CharactersList";
 
 const SelectedMovieProfile = (props) => {
   const [charactersProfileArray, setCharactersProfileArray] = useState([]);
@@ -41,7 +41,7 @@ const SelectedMovieProfile = (props) => {
       <div className="text-lg text-black flex jusitfy-center">
         {opening_crawl}
       </div>
-      <TableSorter input={charactersProfileArray} />
+      <CharactersList input={charactersProfileArray} />
     </div>
   );
 };
