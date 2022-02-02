@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import SelectedEpisode from "../selectedepisode/SelectedEpisode";
 import { selectAllEpisodes } from "./movieSlice";
+import StarWarsLogo from "./StarwarsLogo";
 
 const SelectEpisode = () => {
   const [isOpen, setOpen] = useState(false);
@@ -44,7 +45,13 @@ const SelectEpisode = () => {
           </div>
         </div>
       </div>
-      <SelectedEpisode input={selectedEpisodeId} />
+      <div>
+        {selectedEpisodeId ? (
+          <SelectedEpisode input={selectedEpisodeId} />
+        ) : (
+          <StarWarsLogo />
+        )}
+      </div>
     </>
   );
 };

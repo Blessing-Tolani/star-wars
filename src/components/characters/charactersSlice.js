@@ -7,7 +7,15 @@ const charactersSlice = createSlice({
   initialState,
   reducers: {
     charactersDetails(state, action) {
-      state.push(action.payload);
+      const { id, episodeCharacters } = action.payload;
+      const existingEpisodeCharacters = state.find(
+        (episode) => episode.id === id
+      );
+      if (!existingEpisodeCharacters) {
+        console.log(action.payload);
+        state.push(action.payload);
+      } else {
+      }
     },
   },
 });

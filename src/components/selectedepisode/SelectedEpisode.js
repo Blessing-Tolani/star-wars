@@ -1,7 +1,6 @@
-import StarWarsLogo from "../StarwarsLogo";
 import { useDispatch, useSelector } from "react-redux";
 import { client } from "../../pages/api/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { charactersDetails } from "../characters/charactersSlice";
 
@@ -10,31 +9,44 @@ const SelectedEpisode = (props) => {
   const dispatch = useDispatch();
   let episodeId = props.input;
   let episodeProfile;
-  if (!episodeId) {
-    episodeProfile = <StarWarsLogo />;
-  } else {
-    setCharactersArray([]);
-    const episode = useSelector((state) =>
-      state.movie.starWarsMovie.find(
-        (episode) => episode.episode_id === episodeId
-      )
-    );
 
+  let confirm = 0;
+  // setCharactersArray([]);
+  const episode = useSelector((state) =>
+    state.movie.starWarsMovie.find(
+      (episode) => episode.episode_id === episodeId
+    )
+  );
+  //   const episodeCharacters = useSelector((state) =>
+  //   state.movie.starWarsMovie.find(
+  //     (episode) => episode.episode_id === episodeId
+  //   )
+  // );
+
+  let fig = episode.characters.length;
+  console.log(fig);
+  useEffect(() => {
+    let episodeCharacters = [];
     episode.characters.map((character) => {
       (async function fetchEpisodeCharacters() {
         const response = await client.get(character);
         let resultNeeded = {
           name: response.data.name,
           gender: response.data.gender,
-          height: response.height,
+          height: response.data.height,
         };
-        console.log(resultNeeded);
-        setCharactersArray((prevState) => [...prevState, resultNeeded]);
-        return response.data.results;
+        episodeCharacters.push(resultNeeded);
+        confirm += 1;
+        if (confirm === fig) {
+          console.log("done");
+          // setCharactersArray(check);
+          console.log(episodeCharacters);
+          dispatch(charactersDetails({ id: episodeId, episodeCharacters }));
+        }
       })();
     });
-    dispatch(charactersDetails(charactersArray));
-  }
+  }, [episodeId]);
+
   return <div>{episodeProfile}</div>;
 };
 
