@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import SelectedEpisode from "../selectedepisode/SelectedEpisode";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import SelectedEpisodeProfile from "../selectedepisode/SelectedEpisodeProfile";
 import { selectAllEpisodes } from "./movieSlice";
 import StarWarsLogo from "./StarwarsLogo";
 
@@ -47,7 +47,7 @@ const SelectEpisode = () => {
       </div>
       <div>
         {selectedEpisodeId ? (
-          <SelectedEpisode input={selectedEpisodeId} />
+          <SelectedEpisodeProfile input={selectedEpisodeId} />
         ) : (
           <StarWarsLogo />
         )}

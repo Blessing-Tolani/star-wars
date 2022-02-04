@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 
-const CharactersList = (props) => {
+const CharactersLayout = (props) => {
   const [sortConfig, setSortConfig] = useState(null);
   const [selectedGender, setSelectedGender] = useState("");
 
@@ -131,7 +131,7 @@ const CharactersList = (props) => {
       <div>
         <h1 className="text-lg">Filter</h1>
         <div>
-          <label htmlFor="gender">Select Gender:</label>
+          <label for="gender">Select Gender:</label>
           <select
             id="gender"
             className="bg-black ml-2"
@@ -177,4 +177,4 @@ const CharactersList = (props) => {
   );
 };
 
-export default CharactersList;
+export default CharactersLayout;

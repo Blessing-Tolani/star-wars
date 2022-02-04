@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchMovie = createAsyncThunk("movie/fetchMovie", async () => {
   const response = await client.get("https://swapi.dev/api/films/");
-  console.log(response.data.results);
+
   return response.data.results;
 });
 
