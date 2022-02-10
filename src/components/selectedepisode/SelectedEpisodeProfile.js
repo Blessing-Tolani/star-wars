@@ -4,12 +4,12 @@
 //Map through the episode characters and fetch the details for each character
 
 import { useDispatch, useSelector } from "react-redux";
-import { client } from "../../pages/api/client";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import SelectedEpisodeCharacters from "./SelectedEpisodeCharacters";
-import { charactersDetails } from "../characters/charactersSlice";
 
 const SelectedEpisodeProfile = (props) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   let episodeId = props.input;
 
@@ -39,7 +39,7 @@ const SelectedEpisodeProfile = (props) => {
         );
         results.forEach((result) => console.log(result));
       } catch (err) {
-        document.write(err);
+        router.push("/error");
       }
     })();
     // episode.characters.map((character) => {

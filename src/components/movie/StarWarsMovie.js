@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Link from "next/link";
 import Loading from "../loading";
-
+import { useRouter } from "next/router";
 import { fetchMovie } from "./movieSlice";
 
 import SelectEpisode from "./SelectEpisode";
 
 export const StarWarsMovie = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const movieStatus = useSelector((state) => state.movie.status);
   const error = useSelector((state) => state.movie.error);
 
@@ -26,7 +26,7 @@ export const StarWarsMovie = () => {
   if (movieStatus === "succeeded") {
     content = <SelectEpisode />;
   } else if (movieStatus === "failed") {
-    content = <div>{error}</div>;
+    router.push("/error");
   }
 
   return <div className="posts-list">{content}</div>;
