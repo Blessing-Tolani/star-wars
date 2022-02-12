@@ -29,7 +29,7 @@ const SelectedMovieProfile = (props) => {
     let movie_characters = movieProfile.movieCharacters;
     movieContent = (
       <div className=" ">
-        <p className="movieheader pb-4 text-xl sm:text-3xl text-white text-center">
+        <p className="movieheader pb-4 text-2xl sm:text-3xl text-white text-center">
           Movie Details
         </p>
         <marquee width="95%" direction="left" height="30px">
