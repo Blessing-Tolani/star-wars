@@ -2,34 +2,34 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "../features/loading";
 import { useRouter } from "next/router";
-import { fetchMovie } from "./movieSlice";
+import { fetchMovies } from "./moviesSlice";
 
-import SelectEpisode from "./SelectEpisode";
+import SelectMovie from "./SelectMovie";
 
-export const StarWarsMovie = () => {
+export const StarWarsMovies = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const movieStatus = useSelector((state) => state.movie.status);
-  const error = useSelector((state) => state.movie.error);
+  const moviesStatus = useSelector((state) => state.movies.status);
+  const error = useSelector((state) => state.movies.error);
 
   useEffect(() => {
-    if (movieStatus === "idle") {
-      dispatch(fetchMovie());
+    if (moviesStatus === "idle") {
+      dispatch(fetchMovies());
     }
-  }, [movieStatus, dispatch]);
+  }, [moviesStatus, dispatch]);
 
   let content;
 
-  if (movieStatus === "loading") {
+  if (moviesStatus === "loading") {
     content = (
       <div className="fixed w-full h-full inset-0 flex justify-center items-center bg-black">
         <Loading />;
       </div>
     );
   }
-  if (movieStatus === "succeeded") {
-    content = <SelectEpisode />;
-  } else if (movieStatus === "failed") {
+  if (moviesStatus === "succeeded") {
+    content = <SelectMovie />;
+  } else if (moviesStatus === "failed") {
     router.push("/error");
   }
 

@@ -88,35 +88,37 @@ const CharactersLayout = (props) => {
 
   return (
     <div className="">
-      <div className="my-8 text-white">
-        <label htmlFor="gender">Select Gender:</label>
+      <div className="my-4 text-white">
+        <label htmlFor="gender" className="text-sm">
+          Select Gender:
+        </label>
         <select
           name="gender"
-          className="bg-black ml-2 border border-white rounded focus:outline-none"
+          className="bg-black ml-2 border text-sm border-white rounded focus:outline-none px-1"
           onChange={(e) => handleChange(e)}
           value={selectedGender}
         >
           <option value="all" className="bg-black">
             All
           </option>
-          <option value="male" className="bg-black">
-            Male
+          <option value="M" className="bg-black">
+            Male (M)
           </option>
-          <option value="female" className="bg-black">
-            Female
+          <option value="F" className="bg-black">
+            Female (F)
           </option>
-          <option value="hemaphrodite" className="bg-black">
-            Hemaphrodite
+          <option value="H" className="bg-black">
+            Hemaphrodite (H)
           </option>
-          <option value="n/a" className="bg-black">
+          <option value="N/A" className="bg-black">
             N/A
           </option>
-          <option value="none" className="bg-black">
+          <option value="None" className="bg-black">
             None
           </option>
         </select>
       </div>
-      <table className="border border-yellow-300 w-full sm:w-auto">
+      <table className="border border-yellow-300 w-full sm:w-auto lg:w-3/5">
         <thead className="border-b border-yellow-300">
           <tr className="text-yellow-300">
             <td

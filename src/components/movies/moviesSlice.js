@@ -2,35 +2,35 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { client } from "../../pages/api/client";
 
 const initialState = {
-  starWarsMovie: [],
+  starWarsMovies: [],
   status: "idle",
   error: null,
 };
 
-export const fetchMovie = createAsyncThunk("movie/fetchMovie", async () => {
+export const fetchMovies = createAsyncThunk("movies/fetchMovies", async () => {
   const response = await client.get("https://swapi.dev/api/films/");
   return response.data.results;
 });
 
-const movieSlice = createSlice({
-  name: "movie",
+const moviesSlice = createSlice({
+  name: "movies",
   initialState,
   extraReducers(builder) {
     builder
-      .addCase(fetchMovie.pending, (state, action) => {
+      .addCase(fetchMovies.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(fetchMovie.fulfilled, (state, action) => {
+      .addCase(fetchMovies.fulfilled, (state, action) => {
         state.status = "succeeded";
         //add fetched movie to the array
-        state.starWarsMovie = state.starWarsMovie.concat(action.payload);
+        state.starWarsMovies = state.starWarsMovies.concat(action.payload);
       })
-      .addCase(fetchMovie.rejected, (state, action) => {
+      .addCase(fetchMovies.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
   },
 });
 
-export const selectAllEpisodes = (state) => state.movie.starWarsMovie;
-export default movieSlice.reducer;
+export const selectAllMovies = (state) => state.movies.starWarsMovies;
+export default moviesSlice.reducer;

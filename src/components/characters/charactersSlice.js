@@ -7,11 +7,9 @@ const charactersSlice = createSlice({
   initialState,
   reducers: {
     charactersDetails(state, action) {
-      const { id, episodeCharacters } = action.payload;
-      const existingEpisodeCharacters = state.find(
-        (episode) => episode.id === id
-      );
-      if (!existingEpisodeCharacters) {
+      const { id, movieCharacters } = action.payload;
+      const existingMovieCharacters = state.find((movie) => movie.id === id);
+      if (!existingMovieCharacters) {
         console.log(action.payload);
         state.push(action.payload);
       } else {

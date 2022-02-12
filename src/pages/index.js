@@ -1,8 +1,7 @@
 import Head from "next/head";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import store from "../app/store";
 import { Provider } from "react-redux";
-import { StarWarsMovie } from "../components/movie/StarWarsMovie";
+import { StarWarsMovies } from "../components/movies/StarWarsMovies";
 
 const Home = () => {
   return (
@@ -11,11 +10,7 @@ const Home = () => {
         <title>Star Wars</title>
       </Head>
       <Provider store={store}>
-        <Router>
-          <Routes>
-            <Route path="/" element={<StarWarsMovie />}></Route>
-          </Routes>
-        </Router>
+        <StarWarsMovies />
       </Provider>
     </div>
   );

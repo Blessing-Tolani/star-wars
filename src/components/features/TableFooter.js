@@ -17,15 +17,17 @@ const TableFooter = (props) => {
     let totalCharacter = 0;
     let totalHeight = 0;
 
-    charactersHeightArray.map((item) => {
-      totalHeight += parseInt(item);
-    });
+    for (let i = 0; i < heightArrayLength; i++) {
+      totalCharacter += 1;
+      let characterHeight = charactersHeightArray[i];
+      if (characterHeight == "unknown") {
+        continue;
+      }
+      totalHeight += parseInt(characterHeight);
+    }
 
     convertToFeetandInches(totalHeight);
 
-    for (i = 0; i < heightArrayLength; i++) {
-      totalCharacter += 1;
-    }
     return (
       <tr className="text-yellow-300">
         <td>Total: {totalCharacter}</td>
