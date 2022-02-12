@@ -94,7 +94,7 @@ const CharactersLayout = (props) => {
         </label>
         <select
           name="gender"
-          className="bg-black ml-2 border text-sm border-white rounded focus:outline-none px-1"
+          className="bg-black ml-2 border text-sm border-white rounded focus:outline-none p-1"
           onChange={(e) => handleChange(e)}
           value={selectedGender}
         >
