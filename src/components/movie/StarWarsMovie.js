@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Loading from "../loading";
+import Loading from "../features/loading";
 import { useRouter } from "next/router";
 import { fetchMovie } from "./movieSlice";
 
@@ -21,7 +21,11 @@ export const StarWarsMovie = () => {
   let content;
 
   if (movieStatus === "loading") {
-    content = <Loading />;
+    content = (
+      <div className="fixed w-full h-full inset-0 flex justify-center items-center bg-black">
+        <Loading />;
+      </div>
+    );
   }
   if (movieStatus === "succeeded") {
     content = <SelectEpisode />;

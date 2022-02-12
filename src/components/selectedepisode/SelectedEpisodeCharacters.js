@@ -2,19 +2,24 @@
 // Uses the ID to get the characters details from the redux store (characterSlice)
 //Displays the opening crawl of the selected episode and calls character Layout
 
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import CharactersLayout from "../characters/CharactersLayout";
-import Loading from "../loading";
+import Loading from "../features/loading";
 
-const GetSelectedEpisodeCharacters = (props) => {
+const SelectedEpisodeCharacters = (props) => {
   let id = props.input;
   let episodeContent;
+
   const episodeProfile = useSelector((state) =>
     state.characters.find((episode) => episode.id === id)
   );
+
   if (!episodeProfile) {
-    episodeContent = <Loading />;
+    episodeContent = (
+      <div className="h-64 ">
+        <Loading />
+      </div>
+    );
   } else {
     console.log(episodeProfile);
     let episode_characters = episodeProfile.episodeCharacters;
@@ -24,4 +29,4 @@ const GetSelectedEpisodeCharacters = (props) => {
   return <div>{episodeContent}</div>;
 };
 
-export default GetSelectedEpisodeCharacters;
+export default SelectedEpisodeCharacters;

@@ -1,16 +1,19 @@
 import React, { useState, useMemo, useEffect } from "react";
+import TableFooter from "../features/TableFooter";
 
 const CharactersLayout = (props) => {
   const [sortConfig, setSortConfig] = useState(null);
   const [selectedGender, setSelectedGender] = useState("");
 
   let charactersProfileArray = props.input;
-  let sortedCharacter = [...charactersProfileArray];
+  let sortedCharacters = [...charactersProfileArray];
+  let CharactersProfile;
+  let charactersHeightArray = [];
 
-  // Table sorter section
+  // Sorts the Table
   useMemo(() => {
     if (sortConfig) {
-      sortedCharacter.sort((a, b) => {
+      sortedCharacters.sort((a, b) => {
         if (isNaN(a[sortConfig.field])) {
           if (a[sortConfig.field] < b[sortConfig.field]) {
             return sortConfig.direction == "ascending" ? -1 : 1;
@@ -25,16 +28,12 @@ const CharactersLayout = (props) => {
             : b[sortConfig.field] - a[sortConfig.field];
         }
       });
-      console.log(sortedCharacter);
-      return sortedCharacter;
+
+      return sortedCharacters;
     }
-  }, [charactersProfileArray, sortConfig]);
+  }, [charactersProfileArray, sortConfig, selectedGender]);
 
-  useEffect(() => {
-    setSelectedGender("all");
-  }, [charactersProfileArray]);
-
-  //Table sorter function
+  //Table sorter config function
   const requestSort = (field) => {
     let direction = "ascending";
     if (
@@ -47,131 +46,103 @@ const CharactersLayout = (props) => {
     setSortConfig({ field, direction });
   };
 
-  //selection of gender function
+  //Reset selected Gender to all when there is a change in the movie episode
+  useEffect(() => {
+    setSelectedGender("all");
+  }, [charactersProfileArray]);
+
+  //sets the selected Gender
   const handleChange = (e) => {
-    console.log(e.target.value);
     setSelectedGender(e.target.value);
   };
 
-  let CharactersProfile;
-  let heightarr = [];
-
+  // Creates the charactersHeightArray and body of the table
   if (selectedGender === "all") {
-    //height adder
-    sortedCharacter.map((item) => {
-      heightarr.push(item.height);
+    sortedCharacters.map((character) => {
+      charactersHeightArray.push(character.height);
     });
 
-    CharactersProfile = sortedCharacter.map((item, index) => (
-      <tr key={index} className="border-b">
-        <td className="border-r p-2">{item.name}</td>
-        <td className="border-r p-2">{item.gender}</td>
-        <td className="p-2">{item.height}</td>
+    CharactersProfile = sortedCharacters.map((character, index) => (
+      <tr key={index} className="border-b border-yellow-300 text-yellow-300">
+        <td className="border-r border-yellow-300 p-2">{character.name}</td>
+        <td className="border-r border-yellow-300 p-2">{character.gender}</td>
+        <td className="p-2">{character.height}</td>
       </tr>
     ));
   } else {
-    //height adder
-    sortedCharacter
-      .filter((objitem) => objitem.gender === selectedGender)
-      .map((item) => {
-        heightarr.push(item.height);
+    sortedCharacters
+      .filter((character) => character.gender === selectedGender)
+      .map((character) => {
+        charactersHeightArray.push(character.height);
       });
-    CharactersProfile = sortedCharacter
-      .filter((objitem) => objitem.gender === selectedGender)
-      .map((item, index) => (
-        <tr key={index} className="border-b">
-          <td className="border-r p-2">{item.name}</td>
-          <td className="border-r p-2">{item.gender}</td>
-          <td className="p-2">{item.height}</td>
+    CharactersProfile = sortedCharacters
+      .filter((character) => character.gender === selectedGender)
+      .map((character, index) => (
+        <tr key={index} className="border-b border-yellow-300 text-yellow-300">
+          <td className="border-r p-2">{character.name}</td>
+          <td className="border-r p-2">{character.gender}</td>
+          <td className="p-2">{character.height}</td>
         </tr>
       ));
   }
 
-  //converter function
-  let heightInFeet;
-  let heightInInches;
-  const convertToFeetandInches = (totalHeight) => {
-    let x = totalHeight * 0.032808;
-    let y = totalHeight * 0.3937;
-
-    heightInFeet = x.toFixed(2);
-    heightInInches = y.toFixed(2);
-  };
-
-  // Counting character function
-  let arrlength = heightarr.length;
-  const countCharacter = (heightarr) => {
-    let i;
-    let totalCharacter = 0;
-    let totalHeight = 0;
-
-    heightarr.map((item) => {
-      totalHeight += parseInt(item);
-    });
-
-    convertToFeetandInches(totalHeight);
-
-    for (i = 0; i < arrlength; i++) {
-      totalCharacter += 1;
-    }
-    return (
-      <tr>
-        <td>Total: {totalCharacter}</td>
-        <td></td>
-        <td>
-          Total: {totalHeight}cm ({heightInFeet}ft/{heightInInches}in)
-        </td>
-      </tr>
-    );
-  };
-  let foot = countCharacter(heightarr);
-
   return (
-    <div className="bg-blue-900 text-white">
-      <div>
-        <h1 className="text-lg">Filter</h1>
-        <div>
-          <label for="gender">Select Gender:</label>
-          <select
-            id="gender"
-            className="bg-black ml-2"
-            onChange={(e) => handleChange(e)}
-            value={selectedGender}
-          >
-            <option value="all" className="bg-black">
-              All
-            </option>
-            <option value="male" className="bg-black">
-              Male
-            </option>
-            <option value="female" className="bg-black">
-              Female
-            </option>
-            <option value="hemaphrodite" className="bg-black">
-              Hemaphrodite
-            </option>
-            <option value="n/a" className="bg-black">
-              None
-            </option>
-          </select>
-        </div>
+    <div className="">
+      <div className="my-8 text-white">
+        <label htmlFor="gender">Select Gender:</label>
+        <select
+          name="gender"
+          className="bg-black ml-2 border border-white rounded focus:outline-none"
+          onChange={(e) => handleChange(e)}
+          value={selectedGender}
+        >
+          <option value="all" className="bg-black">
+            All
+          </option>
+          <option value="male" className="bg-black">
+            Male
+          </option>
+          <option value="female" className="bg-black">
+            Female
+          </option>
+          <option value="hemaphrodite" className="bg-black">
+            Hemaphrodite
+          </option>
+          <option value="n/a" className="bg-black">
+            N/A
+          </option>
+          <option value="none" className="bg-black">
+            None
+          </option>
+        </select>
       </div>
-      <table className="border">
-        <thead className="border-b">
-          <tr>
-            <td className="border-r p-2">
-              <button onClick={() => requestSort("name")}>Name</button>
+      <table className="border border-yellow-300 w-full sm:w-auto">
+        <thead className="border-b border-yellow-300">
+          <tr className="text-yellow-300">
+            <td
+              className="border-r  border-yellow-300 p-2 cursor-pointer"
+              onClick={() => requestSort("name")}
+            >
+              Name
             </td>
-            <td className="border-r p-2">
-              <button onClick={() => requestSort("gender")}>Gender</button>
+            <td
+              className="border-r border-yellow-300 p-2 cursor-pointer"
+              onClick={() => requestSort("gender")}
+            >
+              Gender
             </td>
-            <td className="p-2" onClick={() => requestSort("height")}>
+            <td
+              className="p-2 cursor-pointer"
+              onClick={() => requestSort("height")}
+            >
               Height
             </td>
           </tr>
         </thead>
         <tbody>{CharactersProfile}</tbody>
-        <tfoot>{foot}</tfoot>
+        <tfoot>
+          <TableFooter input={charactersHeightArray} />
+        </tfoot>
       </table>
     </div>
   );
